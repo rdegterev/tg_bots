@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  bot:
+    container_name: bot
+    build:
+      context: ./app
+    restart: always
+    ports:
+      - '8020:8000'
+    env_file:
+      - sorting_hat.env
+    depends_on:
+      - db
+    links:
+      - db
+    volumes:
+      - ./app:/usr/src/app/
+    command: ["python3", "main.py"]
+    networks:
+      - net_inner
+
+  db:
+    image: postgres:13.5
+    container_name: bot_db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: db_secreet_password
+      POSTGRES_USER: db_user
+      POSTGRES_DB: sorting_hat
+    ports:
+      - '5441:5432'
+    volumes:
+      - ./postgres-data/:/var/lib/postgresql/data/
+    networks:
+      - net_inner
+
+networks:
+  net_inner:
+    driver: bridge
