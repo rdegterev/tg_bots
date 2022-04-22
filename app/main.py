@@ -14,10 +14,10 @@ asyncio.set_event_loop(loop)
 dispatcher = Dispatcher(bot=bot, loop=loop)
 
 
-async def before_start(dispatcher: Dispatcher):
-    dispatcher.config = settings
-    await setup_middlewares(dispatcher.bot)
-    await add_handlers(dispatcher)
+async def before_start(dp: Dispatcher):
+    dp.config = settings
+    await setup_middlewares(dp.bot)
+    await add_handlers(dp)
 
 
 if __name__ == '__main__':
