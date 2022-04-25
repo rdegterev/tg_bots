@@ -1,10 +1,11 @@
-version: '3.8'
+version: '3.7'
 
 services:
   bot:
     container_name: bot
     build:
       context: ./app
+    entrypoint: ["/usr/src/app/check_db.sh"]
     restart: always
     ports:
       - '8020:8000'
